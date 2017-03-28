@@ -1,9 +1,5 @@
-package bigint;
-
 /**
  * BigInteger contains an Integer of arbitrarty length 
- * @author Anton
- *
  */
 public final class BigInteger {
 
@@ -79,9 +75,7 @@ public final class BigInteger {
 			Bit b = new Bit(false);
 			b.next = this;
 			return b;
-		}
-
-		
+		}		
 	}
 
 	public BigInteger(String val) {		
