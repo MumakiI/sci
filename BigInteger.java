@@ -2,16 +2,7 @@
  * BigInteger contains an Integer of arbitrarty length 
  */
 public final class BigInteger {
-
-	private static BigInteger TEN = new BigInteger("9");
-
-	static {
-		TEN = TEN.add(new BigInteger("1"));
-	}
-
-	/** Linked list of bits starting from lower rank */
-	private Bit bits;
-
+	
 	/** Class presenting single bit of BigInteger */
 	private static class Bit {
 		/** true if bit == 1, false if bit   */
@@ -78,16 +69,34 @@ public final class BigInteger {
 		}		
 	}
 
+	private static BigInteger TEN = new BigInteger("9");
+
+	static {
+		TEN = TEN.add(new BigInteger("1"));
+	}
+
+	/** Linked list of bits starting from lower rank */
+	private Bit bits;	
+
+	/** Constructor */
 	public BigInteger(String val) {		
 		this.bits = splitAndCalc(val);
 	}
 	
+	/** Constructor */
 	private BigInteger() {
 		bits = new Bit(false);
 	}
+	
+	/** API's add method */
+	public BigInteger add(BigInteger add) {
+		BigInteger summ = new BigInteger();
+		summ.bits = add(this.bits, add.bits, false);
+		return summ;
+	}
 
 	/** Decimal to bitwise conversion */
-	protected Bit forChar(char val) {
+	private Bit forChar(char val) {
 		Bit first = null;
 		
 		if (val >= '0' && val <= '9') {
@@ -111,18 +120,7 @@ public final class BigInteger {
 			}
 		}
 		return first;
-	}
-
-	public String toString() {
-		return bits.toString();
-	}
-
-	/** API's add method */
-	public BigInteger add(BigInteger add) {
-		BigInteger summ = new BigInteger();
-		summ.bits = add(this.bits, add.bits, false);
-		return summ;
-	}
+	}	
 
 	/** Recursively applies bitwise addition algorithm */
 	static Bit add(Bit b1, Bit add, boolean rem) {
@@ -185,6 +183,10 @@ public final class BigInteger {
 			b = b.multi10(length - pivot);
 			return add(b, splitAndCalc(right), false);
 		}
+	}
+	
+	public String toString() {
+		return bits.toString();
 	}
 	
 	/** Simple test */
