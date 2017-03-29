@@ -10,7 +10,7 @@ class BigIntegerTest {
 
     @Test
     void testAdd_small_numbers() {
-        assertEquals("7", new BigInteger("7").add(new BigInteger("8")).toString());
+        assertEquals("15", new BigInteger("7").add(new BigInteger("8")).toString());
     }
 
     @Test
