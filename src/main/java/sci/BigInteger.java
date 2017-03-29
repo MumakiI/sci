@@ -1,5 +1,7 @@
+package sci;
+
 /**
- * BigInteger contains an Integer of arbitrarty length 
+ * BigInteger contains an Integer of arbitrarty length
  */
 public final class BigInteger {
 	
