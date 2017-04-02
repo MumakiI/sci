@@ -103,6 +103,8 @@ public final class BigInteger {
 		
 		if (val >= '0' && val <= '9') {
 			int N = val - '0';
+			if (N==0)
+				return new Bit(false);
 			int n = (int) Math.floor(Math.log10(N) / Math.log10(2)) + 1;
 			int bytes[] = new int[n];
 			int i = n - 1;
@@ -134,36 +136,23 @@ public final class BigInteger {
 				return null;
 		}
 
-		Bit next = null;
-
 		if (b1 == null) {
-			if (rem)
-				b.state = add.state;
-			else
-				b.state = !add.state;
-			next = add(null, add.next, add.state && rem);
+			b.state = add.state ^ rem;
+			b.next = add(null, add.next, add.state && rem);
 		} else if (add == null) {
-			if (rem)
-				b.state = !b1.state;
-			else
-				b.state = b1.state;
-			next = add(b1.next, null, b1.state && rem);
+			b.state = b1.state ^ rem;
+			b.next = add(b1.next, null, b1.state && rem);
 		} else {
-			if (!rem)
-				b.state = b1.state ^ add.state;
-			else
-				b.state = !(b1.state ^ add.state);
-			next = add(b1.next, add.next, ((b1.state || add.state) && rem) || (b1.state && add.state));
+			b.state = (b1.state ^ add.state) ^ rem;
+			b.next = add(b1.next, add.next, ((b1.state || add.state) && rem) || (b1.state && add.state));
 		}
-		if (next != null)
-			b.next = next;
 		return b;
 	}
 
 	/**
 	 * 1) Recursively devides input string into 2 parts of equal length,
 	 * 	  until input becomes 1 character length;
-	 * 2) Calculates Bits for right and left parts separatelly
+	 * 2) Calculates Bits for right and left parts separately
 	 * 3) Multiply left part by 10, N times. N == count of decimal digits of right part
 	 * 4) return sum of left and right parts
 	 *  
@@ -195,5 +184,7 @@ public final class BigInteger {
 	public static void main(String[] args) {
 		BigInteger _1 = new BigInteger("123456789");
 		System.out.println(_1);
+		BigInteger _8 = new BigInteger("8");
+		System.out.println(_8.add(new BigInteger("7")));
 	}
 }
