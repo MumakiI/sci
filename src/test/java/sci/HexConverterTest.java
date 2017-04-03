@@ -15,6 +15,7 @@ public class HexConverterTest {
         assertEquals("1a",  c.toHex(26));
         assertEquals("1e",  c.toHex(30));
         assertEquals("493e0",  c.toHex(300000));
+        assertEquals("ffffffff",  c.toHex(-1));
     }
 
 }
