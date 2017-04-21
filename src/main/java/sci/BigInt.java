@@ -3,70 +3,62 @@ package sci;
 /**
  * Created by Anton on 4/4/2017.
  */
-public class BigInt {
+public class BigInt
+{
 
-    private byte[] bits;
+	public static final int BASE = 127;
+	public static final int SIGNIFICANT_BITS_COUNT = 7;
+	public static final byte[] ONE = { 1 };
+	private byte[] bits;
 
-    public BigInt(byte[] bits)
-    {
-        this.bits = bits;
-    }
+	public BigInt(byte[] bits)
+	{
+		this.bits = bits;
+	}
 
-    BigInt add(BigInt a)
-    {
-        return new BigInt(add(this.bits, a.bits, 0, 0, 0));
-    }
+	public BigInt add(BigInt a)
+	{
+		return new BigInt(add(this.bits, a.bits, 0, 0, 0));
+	}
 
-    byte[] add(byte[] a, byte[] b, int i, int j, int overflow)
-    {
-        if (i > a.length -1 && j>b.length-1)
-            if (overflow == 1)
-                return new byte[]{1};
-            else
-                return null;
-        short c = (short) (a[i] + b[j] + overflow);
+	private byte[] add(byte[] a, byte[] b, int i, int j, int overflow)
+	{
+		if (i > a.length - 1 && j > b.length - 1)
+			if (overflow == 1)
+				return ONE;
+			else
+				return null;
 
-        byte[] higher = add(a, b, i + 1, j + 1, (c <=127) ? 0 : 1);
+		byte ai = 0;
+		if (i < a.length)
+			ai = a[i];
 
-        if (higher != null)
-        {
-            int length = higher.length + 1;
-            byte[] res = new byte[length];
+		byte bj = 0;
+		if (j < b.length)
+			bj = b[j];
 
-            res[0] = (byte) (c & 127);
-            System.arraycopy(higher, 0, res, 1, higher.length);
-            return  res;
-        }
-        else
-            return new byte[]{(byte)(c & 127)};
+		short currentWithOverflow = (short) (ai + bj + overflow);
+		byte[] higherBits = add(a, b, i + 1, j + 1, (currentWithOverflow <= BASE) ? 0 : 1);
 
-    }
+		byte currentNoOverflow = (byte) (currentWithOverflow & BASE);
+		if (higherBits != null)
+		{
+			byte[] res = new byte[higherBits.length + 1];
+			res[0] = currentNoOverflow;
+			System.arraycopy(higherBits, 0, res, 1, higherBits.length);
+			return res;
+		}
+		else
+			return new byte[] { currentNoOverflow };
+	}
 
-    public String toString() {
-        long l = 0;
-        int i = 0;
-        for (byte b : bits)
-        {
-            l = l + (b << (i++ * 7));
-        }
-        return l + "";
-    }
-
-//	public String toString() {
-//		long l = 0;
-//		int i = 0;
-//
-//		StringBuilder buf = new StringBuilder();
-//		for (byte b : bits)
-//		{
-//			while (b > 10)
-//			{
-//				buf.append(b / 10);
-//				b = (byte) (b % 10);
-//			}
-//			buf.append(b);
-//		}
-//		return buf.toString();
-//		//return "";
-//	}
+	public String toString()
+	{
+		long acc = 0;
+		for (int i = 0; i < bits.length; i++)
+		{
+			acc = acc + (bits[i] << (i * SIGNIFICANT_BITS_COUNT));
+		}
+		return String.valueOf(acc);
+	}
 }
