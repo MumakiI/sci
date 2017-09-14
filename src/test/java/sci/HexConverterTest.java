@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
- * Created by Anton on 4/2/2017.
+ * Created by on 4/2/2017.
  */
 public class HexConverterTest {
 

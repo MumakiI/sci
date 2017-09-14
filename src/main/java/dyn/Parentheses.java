@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Anton_Markov on 5/22/2017.
+ * Created by on 5/22/2017.
  */
 public class Parentheses
 {
@@ -31,17 +31,6 @@ public class Parentheses
 		}
 		Collections.sort(l);
 	return l;
-	}
-
-	String getParenthesysWrap(int n) {
-		if (n==1)
-			return "{}";
-		throw new IllegalStateException();
-	}
-	String getParenthesysApp(int n) {
-		if (n==1)
-			return "{}";
-		throw new IllegalStateException();
 	}
 	public static void main(String[] s) {
 
