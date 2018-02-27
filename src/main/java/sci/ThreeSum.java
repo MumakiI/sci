@@ -29,11 +29,11 @@ public class ThreeSum {
 
         while (k<nums.length-2) {
             if (k==0 || nums[k] != nums[k-1]) {
-                int t = nums[k];
+                int t = -nums[k];
                 int i = k+1; int j = nums.length - 1;
 
                 while (i < j) {
-                    if (t + nums[i] + nums[j] == 0) {
+                    if (nums[i] + nums[j] == t) {
                         result.add(Arrays.asList(t, nums[i], nums[j]));
 
                         while (i<j && nums[i] == nums[i+1])

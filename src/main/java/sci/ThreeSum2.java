@@ -8,8 +8,10 @@ import java.util.List;
  * Created by Anton_Markov on 8/10/2017.
  */
 public class ThreeSum2
-{
-	public List<List<Integer>> threeSum(int[] num) {
+{public static void main(String[] a) {
+	threeSum(new int[]{-1, -1,0,1});
+}
+	public static List<List<Integer>> threeSum(int[] num) {
 		Arrays.sort(num);
 		List<List<Integer>> res = new LinkedList<>();
 		for (int i = 0; i < num.length-2; i++) {

@@ -17,7 +17,7 @@ public class LetterCombinationsofaPhoneNumber
 		map.put('3', new char[]{'d','e','f'});
 		List<String> acc = new ArrayList<>();
 
-		combine(digits, 0, acc, map);
+		//combine(digits, 0, acc, map);
 
 		return acc;
 	}
@@ -34,7 +34,7 @@ public class LetterCombinationsofaPhoneNumber
 		}
 		else {
 			for (StringBuilder b : acc) {
-				b
+
 			}
 		}
 	}
